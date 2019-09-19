@@ -15,33 +15,36 @@ const validationSchema = yup.object().shape({
 })
 
 function FormBuild(props) {
-    const { onSubmit } = props;
+    const { onSubmit, initialformValues } = props;
     return (
-        <Formik validationSchema={validationSchema} render={props => {
-            return (
-                <Form onSubmit={onSubmit}>
-                    <div>
-                        <Field name='name' type='text' placeholder='Name' />
-                        <ErrorMessage name='name' component='div' />
-                    </div>
-                    <div>
-                        <Field name='email' type='text' placeholder='Email' />
-                        <ErrorMessage name='email' component='div' />
-                    </div>
-                    <div>
-                        <Field name='password' type='text' placeholder='Password' />
-                        <ErrorMessage name='name' component='div' />
-                    </div>
-                    <div>
-                        <label>
-                            <Field name='tos' type='checkbox' />
-                            Accept Terms of Service
-                        </label>
-                    </div>
-                    <button type="submit">Submit</button>
-                </Form>
-            )
-        }} />
+        <Formik initialformValues={initialformValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            render={props => {
+                return (
+                    <Form>
+                        <div>
+                            <Field name='name' type='text' placeholder='Name' />
+                            <ErrorMessage name='name' component='div' />
+                        </div>
+                        <div>
+                            <Field name='email' type='text' placeholder='Email' />
+                            <ErrorMessage name='email' component='div' />
+                        </div>
+                        <div>
+                            <Field name='password' type='text' placeholder='Password' />
+                            <ErrorMessage name='name' component='div' />
+                        </div>
+                        <div>
+                            <label>
+                                <Field name='tos' type='checkbox' checked ={props.values.tos} />
+                                Accept Terms of Service
+                            </label>
+                        </div>
+                        <button type="submit">Submit</button>
+                    </Form>
+                )
+            }} />
     )
 
 }
