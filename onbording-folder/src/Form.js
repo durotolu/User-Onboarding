@@ -1,11 +1,25 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as yup from 'yup';
 
-function FormBuild() {
+const validationSchema = yup.object().shape({
+    name: yup.string()
+                .max(50, 'Field cannot be longer than 50 characters')
+                .required('Name is required'),
+    email: yup.string()
+            .email('Email should be in example@email.com format')
+            .required('Email is required'),
+    password: yup.string()
+                .required('Kindly input password into field')
+                //.min(6, 'Password cannot be less than 6 characters'),
+})
+
+function FormBuild(props) {
+    const { onSubmit } = props;
     return (
-        <Formik render={props => {
+        <Formik validationSchema={validationSchema} render={props => {
             return (
-                <Form>
+                <Form onSubmit={onSubmit}>
                     <div>
                         <Field name='name' type='text' placeholder='Name' />
                         <ErrorMessage name='name' component='div' />
@@ -18,7 +32,6 @@ function FormBuild() {
                         <Field name='password' type='text' placeholder='Password' />
                         <ErrorMessage name='name' component='div' />
                     </div>
-                    
                     <div>
                         <label>
                             <Field name='tos' type='checkbox' />
