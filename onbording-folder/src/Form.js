@@ -37,7 +37,7 @@ function FormBuild(props) {
                         </div>
                         <div>
                             <label>
-                                <Field name='tos' type='checkbox' checked ={props.values.tos} />
+                                <Field name='tos' type='checkbox' />
                                 Accept Terms of Service
                             </label>
                         </div>

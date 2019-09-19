@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import FormBuild from './Form';
 import axios from 'axios';
+import User from './Userlist';
 
 const buildApi = 'https://reqres.in/api/users_';
 const initialFormValue = {
@@ -12,13 +13,13 @@ const initialFormValue = {
 }
 
 function App() {
+  const [usersList, setUsersList] = useState([])
   // useEffect(() => {
   //   fetchBuildData 
   // }, [])
   //const [formValues, setFormValues] = useState(initialFormValue);
 
   const addBuildData = (formValues, action) => {//needs to comply with formik, requires 2 arguments; values and action.
-    debugger
     const formToPost = {
       name: formValues.name,
       email: formValues.email,
@@ -30,12 +31,20 @@ function App() {
       .then(res => {
         console.log(res);
         debugger
+        const newlyCreatedUser = res.data;
+        setUsersList(usersList.concat(newlyCreatedUser))
+        console.log(usersList);
+        action.resetForm();
+      })
+      .catch(err => {
+        debugger
       })
   }
 
   return (
     <div className="App">
       <FormBuild initialformValues={initialFormValue} onSubmit={addBuildData} />
+      <User usersList={usersList} />
     </div>
   );
 }
